@@ -1,8 +1,4 @@
-interface Env {
-  ARTIFACTS: KVNamespace;
-}
-
-export const onRequestGet: PagesFunction<Env> = async (context) => {
+export async function onRequestGet(context) {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
@@ -44,4 +40,4 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       headers: corsHeaders,
     });
   }
-};
+}

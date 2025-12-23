@@ -1,24 +1,11 @@
-interface Env {
-  ARTIFACTS: KVNamespace;
-}
-
-interface SubmitRequest {
-  kind: 'link' | 'text' | 'chat' | 'transcript' | 'tweet' | 'doc';
-  content: string;
-  source_url?: string;
-  submitter?: 'team' | 'public';
-  tags?: string[];
-  note?: string;
-}
-
-async function sha256(message: string): Promise<string> {
+async function sha256(message) {
   const msgBuffer = new TextEncoder().encode(message);
   const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
+export async function onRequestPost(context) {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -26,7 +13,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   };
 
   try {
-    const body: SubmitRequest = await context.request.json();
+    const body = await context.request.json();
 
     if (!body.kind || !body.content) {
       return new Response(JSON.stringify({ error: 'Missing required fields: kind, content' }), {
@@ -69,7 +56,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 };
 
-export const onRequestOptions: PagesFunction = async () => {
+export async function onRequestOptions() {
   return new Response(null, {
     headers: {
       'Access-Control-Allow-Origin': '*',
