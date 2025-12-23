@@ -1,0 +1,8 @@
+id: road.operational
+version: "1.0.0"
+title: "The Operational Language Road"
+thesis: "Enumerated, constructible prose creates closure so machines and humans read/write the same structure."
+includes_claims: [C-0002, C-0005, C-0007]
+includes_examples: []
+status: live
+maintainers: ["runcible"]

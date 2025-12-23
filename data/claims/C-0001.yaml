@@ -1,0 +1,9 @@
+id: C-0001
+version: "1.0.0"
+text: "LLMs perform N-dimensional Bayesian accounting that humans cannot; they handle hundreds or thousands of dimensions effortlessly while humans max out at 5-7 items."
+dependencies: []
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0001, T-0002]
+status: surviving
+changelog:
+  - "1.0.0: initial from Curt transcript"

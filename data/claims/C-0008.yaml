@@ -1,0 +1,9 @@
+id: C-0008
+version: "1.0.0"
+text: "AIs excel at low-dimensional closure domains (math, programming, physics) but struggle with high-dimensional closure domains (governance, law, ethics). This grammar solves high-dimensional closure."
+dependencies: [C-0001]
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0010]
+status: surviving
+changelog:
+  - "1.0.0: initial"

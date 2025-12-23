@@ -1,0 +1,7 @@
+id: T-0004
+version: "1.0.0"
+kind: warranty
+prompt: "What breaks if operational language is not used? What failure modes are prevented?"
+pass_if:
+  - "Lists specific failure modes"
+  - "Explains why operational form prevents them"

@@ -1,0 +1,7 @@
+id: T-0003
+version: "1.0.0"
+kind: operationalization
+prompt: "Define operational language with examples of operational vs non-operational statements."
+pass_if:
+  - "Provides before/after examples"
+  - "Specifies actors, operations, observables"

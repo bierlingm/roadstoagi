@@ -1,0 +1,66 @@
+---
+import Base from "../../layouts/Base.astro";
+import { loadRoads, loadClaims, loadGates, getClaimById, getGateById } from "../../lib/loaders.js";
+
+export function getStaticPaths() {
+  const roads = loadRoads();
+  return roads.map(road => ({ params: { id: road.id } }));
+}
+
+const { id } = Astro.params;
+const roads = loadRoads();
+const allClaims = loadClaims();
+const allGates = loadGates();
+
+const road = roads.find(r => r.id === id);
+if (!road) return Astro.redirect("/404");
+
+const claims = (road.includes_claims || []).map(cid => getClaimById(allClaims, cid)).filter(Boolean);
+---
+<Base title={`${road.title} | Roads to AGI`}>
+  <div class="container">
+    <div style="margin-bottom: 2rem;">
+      <a href="/roads" style="color: var(--muted);">← All Roads</a>
+    </div>
+    
+    <h1>{road.title}</h1>
+    <p style="font-size: 1.25rem; color: var(--muted); margin: 1rem 0;">{road.thesis}</p>
+    
+    <div style="display: flex; gap: 1rem; margin: 1.5rem 0;">
+      <span class="tag">{road.status}</span>
+      <span class="tag">v{road.version}</span>
+      <span class="tag">{claims.length} claims</span>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;" />
+
+    <h2 style="margin-bottom: 1rem;">Claims</h2>
+    {claims.map(claim => (
+      <div class="card" style="margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <code style="color: var(--muted); font-size: 0.8rem;">{claim.id}</code>
+          <span class={`tag ${claim.status}`}>{claim.status}</span>
+        </div>
+        <p style="margin: 1rem 0;">{claim.text}</p>
+        {claim.gates && claim.gates.length > 0 && (
+          <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+            <strong style="font-size: 0.85rem;">Gates:</strong>
+            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--muted); font-size: 0.85rem;">
+              {claim.gates.map(gid => {
+                const gate = getGateById(allGates, gid);
+                return gate ? <li>{gate.prompt}</li> : <li>{gid}</li>;
+              })}
+            </ul>
+          </div>
+        )}
+      </div>
+    ))}
+
+    <hr style="border: none; border-top: 1px solid var(--border); margin: 2rem 0;" />
+    
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="/arena" class="btn" style="background: transparent; border: 1px solid var(--accent);">File a Challenge</a>
+      <a href="/investors" class="btn">Request Investor Brief</a>
+    </div>
+  </div>
+</Base>

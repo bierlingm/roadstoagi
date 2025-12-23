@@ -1,0 +1,9 @@
+id: C-0006
+version: "1.0.0"
+text: "The machine performs Bayesian measurement across unlimited dimensions, then reduces output to human-verifiable checklists—intersubjectively testable criteria."
+dependencies: [C-0001, C-0002]
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0008]
+status: surviving
+changelog:
+  - "1.0.0: initial"

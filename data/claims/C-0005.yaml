@@ -1,0 +1,9 @@
+id: C-0005
+version: "1.0.0"
+text: "Constructive logic from first principles is another form of falsification—building from the bottom up exposes what you are missing."
+dependencies: [C-0003]
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0005]
+status: surviving
+changelog:
+  - "1.0.0: initial"

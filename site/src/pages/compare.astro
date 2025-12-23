@@ -1,0 +1,41 @@
+---
+import Base from "../layouts/Base.astro";
+import { loadRoads, loadClaims } from "../lib/loaders.js";
+
+const roads = loadRoads();
+const claims = loadClaims();
+---
+<Base title="Compare | Roads to AGI">
+  <div class="container">
+    <h1 style="margin-bottom: 0.5rem;">Compare Roads</h1>
+    <p style="color: var(--muted); margin-bottom: 2rem;">
+      See which claims each road uses and their survival status.
+    </p>
+    
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <th style="text-align: left; padding: 1rem;">Claim</th>
+            {roads.map(r => <th style="text-align: center; padding: 1rem;">{r.title}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {claims.map(claim => (
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 1rem;">
+                <code style="font-size: 0.8rem;">{claim.id}</code>
+                <span class={`tag ${claim.status}`} style="margin-left: 0.5rem;">{claim.status}</span>
+              </td>
+              {roads.map(r => (
+                <td style="text-align: center; padding: 1rem;">
+                  {r.includes_claims?.includes(claim.id) ? "✓" : "—"}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Base>

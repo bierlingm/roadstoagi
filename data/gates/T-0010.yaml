@@ -1,0 +1,7 @@
+id: T-0010
+version: "1.0.0"
+kind: prediction
+prompt: "Predict performance on a high-dimensional closure task (e.g., policy analysis) with vs without the grammar."
+pass_if:
+  - "Specifies measurable outcome"
+  - "Predicts directional improvement"

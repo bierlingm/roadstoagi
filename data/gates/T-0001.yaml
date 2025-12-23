@@ -1,0 +1,7 @@
+id: T-0001
+version: "1.0.0"
+kind: operationalization
+prompt: "Enumerate the specific cognitive limits (working memory capacity) and contrast with LLM dimensional capacity."
+pass_if:
+  - "Cites specific human working memory limits (5-7 items)"
+  - "Explains what N-dimensional means for LLMs"

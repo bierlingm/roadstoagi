@@ -1,0 +1,7 @@
+id: T-0008
+version: "1.0.0"
+kind: operationalization
+prompt: "Show the transformation from N-dimensional Bayesian output to human-readable checklist."
+pass_if:
+  - "Specifies reduction mechanism"
+  - "Result is intersubjectively testable"

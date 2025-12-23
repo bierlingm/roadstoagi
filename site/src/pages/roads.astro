@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+import { loadRoads } from "../lib/loaders.js";
+const roads = loadRoads();
+---
+<Base title="Roads | Roads to AGI">
+  <div class="container">
+    <h1 style="margin-bottom: 0.5rem;">All Roads</h1>
+    <p style="color: var(--muted); margin-bottom: 2rem;">Independent paths to understanding general reasoning. Each road stands on its own.</p>
+    <div class="grid">
+      {roads.map(road => (
+        <a href={`/road/${road.id}`} class="card" style="text-decoration: none; color: inherit;">
+          <h3>{road.title}</h3>
+          <p>{road.thesis}</p>
+          <div style="margin-top: 1rem;">
+            <span class="tag">{road.status}</span>
+            <span class="tag">v{road.version}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

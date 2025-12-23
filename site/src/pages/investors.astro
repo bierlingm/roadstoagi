@@ -1,0 +1,64 @@
+---
+import Base from "../layouts/Base.astro";
+import { loadClaims, loadRoads, loadChallenges } from "../lib/loaders.js";
+
+const claims = loadClaims();
+const roads = loadRoads();
+const challenges = loadChallenges();
+
+const surviving = claims.filter(c => c.status === "surviving").length;
+const resolved = challenges.filter(c => c.status === "resolved").length;
+---
+<Base title="Investors | Roads to AGI">
+  <div class="container">
+    <h1 style="margin-bottom: 0.5rem;">For Investors</h1>
+    <p style="color: var(--muted); margin-bottom: 2rem;">
+      Why this produces defensibility, deal flow, and compounding credibility.
+    </p>
+
+    <div style="display: flex; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap;">
+      <div class="card" style="flex: 1; min-width: 150px; text-align: center;">
+        <div style="font-size: 2rem; font-weight: 700;">{roads.length}</div>
+        <div style="color: var(--muted);">Roads</div>
+      </div>
+      <div class="card" style="flex: 1; min-width: 150px; text-align: center;">
+        <div style="font-size: 2rem; font-weight: 700;">{claims.length}</div>
+        <div style="color: var(--muted);">Claims</div>
+      </div>
+      <div class="card" style="flex: 1; min-width: 150px; text-align: center;">
+        <div style="font-size: 2rem; font-weight: 700;">{surviving}</div>
+        <div style="color: var(--muted);">Surviving</div>
+      </div>
+      <div class="card" style="flex: 1; min-width: 150px; text-align: center;">
+        <div style="font-size: 2rem; font-weight: 700;">{resolved}</div>
+        <div style="color: var(--muted);">Challenges Resolved</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 2rem;">
+      <h2 style="margin-bottom: 1rem;">The Thesis</h2>
+      <p>We have created a grammar for human-machine commensurability. LLMs perform N-dimensional Bayesian accounting; humans require checklists. By moving to operational language, we create a shared data structure both can use.</p>
+      <p style="margin-top: 1rem;">This site is the proof: explanations compete under adversarial test. Survival, not consensus, determines truth.</p>
+    </div>
+
+    <div class="card" style="margin-bottom: 2rem;">
+      <h2 style="margin-bottom: 1rem;">Why Invest</h2>
+      <ul style="padding-left: 1.5rem; color: var(--muted);">
+        <li>Public, auditable diligence surface</li>
+        <li>Defensible method (adversarial survival)</li>
+        <li>First-mover in explanation markets</li>
+        <li>Compounding credibility through resolved challenges</li>
+      </ul>
+    </div>
+
+    <div style="background: var(--accent); padding: 2rem; border-radius: 8px; text-align: center;">
+      <h3 style="color: white; margin-bottom: 1rem;">Request a 20-min Founder Brief</h3>
+      <p style="color: rgba(255,255,255,0.8); margin-bottom: 1.5rem;">
+        See the Highway, Arena resolutions, and how this method compounds.
+      </p>
+      <a href="mailto:investors@roadstoagi.org" class="btn" style="background: white; color: var(--accent);">
+        Contact Us
+      </a>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,8 @@
+id: road.adversarial
+version: "1.0.0"
+title: "The Adversarial Survival Road"
+thesis: "Claims must construct, predict, withstand tests, and account for costs. Darwinian survival replaces justification."
+includes_claims: [C-0003, C-0004, C-0005]
+includes_examples: []
+status: live
+maintainers: ["runcible"]

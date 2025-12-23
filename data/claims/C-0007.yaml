@@ -1,0 +1,9 @@
+id: C-0007
+version: "1.0.0"
+text: "We have created a means of commensurability with machines, and machines with us, and a standard by which humans can be commensurable with one another—enabling decidability regardless of background or bias."
+dependencies: [C-0002, C-0006]
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0009]
+status: surviving
+changelog:
+  - "1.0.0: initial"

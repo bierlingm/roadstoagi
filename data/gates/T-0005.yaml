@@ -1,0 +1,7 @@
+id: T-0005
+version: "1.0.0"
+kind: operationalization
+prompt: "Enumerate the stages of reasoning evolution with concrete examples at each stage."
+pass_if:
+  - "Lists all stages: association, explanation, justification, falsification, adversarialism"
+  - "Provides example of claim at each stage"

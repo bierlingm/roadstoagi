@@ -1,0 +1,7 @@
+id: T-0007
+version: "1.0.0"
+kind: prediction
+prompt: "Given a sample claim, predict which hurdle it will fail at and why."
+pass_if:
+  - "Applies hurdles to concrete example"
+  - "Explains failure mechanism"

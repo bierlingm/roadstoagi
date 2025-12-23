@@ -1,0 +1,9 @@
+id: C-0004
+version: "1.0.0"
+text: "Claims must pass survival hurdles: true, ethical, possible, warrantable, liable. If a claim cannot pass these gates, it cannot survive as testimony."
+dependencies: [C-0003]
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0006, T-0007]
+status: surviving
+changelog:
+  - "1.0.0: initial"

@@ -1,0 +1,7 @@
+id: T-0009
+version: "1.0.0"
+kind: warranty
+prompt: "What disputes become decidable that were previously undecidable? Provide examples."
+pass_if:
+  - "Lists specific dispute types"
+  - "Explains mechanism of decidability"

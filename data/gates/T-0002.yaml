@@ -1,0 +1,7 @@
+id: T-0002
+version: "1.0.0"
+kind: prediction
+prompt: "Predict observable differences in human vs LLM performance on high-dimensional reasoning tasks."
+pass_if:
+  - "Specifies measurable task types"
+  - "Predicts directional performance difference"

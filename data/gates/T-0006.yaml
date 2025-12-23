@@ -1,0 +1,7 @@
+id: T-0006
+version: "1.0.0"
+kind: operationalization
+prompt: "Define each survival hurdle (true, ethical, possible, warrantable, liable) with pass/fail criteria."
+pass_if:
+  - "Each hurdle has explicit pass condition"
+  - "Hurdles are ordered and sequential"

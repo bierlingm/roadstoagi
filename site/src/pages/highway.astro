@@ -1,0 +1,49 @@
+---
+import Base from "../layouts/Base.astro";
+import { loadClaims, loadRoads } from "../lib/loaders.js";
+
+const claims = loadClaims();
+const roads = loadRoads();
+
+// Highway = claims surviving across multiple roads
+const claimUsage = {};
+claims.forEach(c => { claimUsage[c.id] = 0; });
+roads.forEach(r => {
+  (r.includes_claims || []).forEach(cid => {
+    if (claimUsage[cid] !== undefined) claimUsage[cid]++;
+  });
+});
+
+const highwayClaims = claims.filter(c => 
+  c.status === "surviving" && claimUsage[c.id] >= 2
+);
+---
+<Base title="Highway | Roads to AGI">
+  <div class="container">
+    <h1 style="margin-bottom: 0.5rem;">The Highway</h1>
+    <p style="color: var(--muted); margin-bottom: 2rem;">
+      Emergent canon. Claims that survive across multiple roads without critical challenges.
+    </p>
+    
+    <div class="card" style="margin-bottom: 2rem; text-align: center;">
+      <div style="font-size: 2rem; font-weight: 700;">{highwayClaims.length}</div>
+      <div style="color: var(--muted);">Claims on the Highway</div>
+      <p style="font-size: 0.8rem; color: var(--muted); margin-top: 1rem;">
+        Rule: surviving + used by ≥2 roads
+      </p>
+    </div>
+
+    {highwayClaims.length === 0 && (
+      <p style="color: var(--muted);">No claims have reached the highway yet.</p>
+    )}
+    
+    {highwayClaims.map(claim => (
+      <div class="card" style="margin-bottom: 1rem;">
+        <code style="color: var(--muted);">{claim.id}</code>
+        <span class="tag surviving" style="margin-left: 1rem;">surviving</span>
+        <span class="tag" style="margin-left: 0.5rem;">{claimUsage[claim.id]} roads</span>
+        <p style="margin-top: 1rem;">{claim.text}</p>
+      </div>
+    ))}
+  </div>
+</Base>

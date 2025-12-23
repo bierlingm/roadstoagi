@@ -1,0 +1,8 @@
+id: road.ledger
+version: "1.0.0"
+title: "The Ledger Road"
+thesis: "LLMs are N-dimensional Bayesian accountants; humans require checklists. We meet by writing audit-ready, operational statements."
+includes_claims: [C-0001, C-0006, C-0008]
+includes_examples: []
+status: live
+maintainers: ["runcible"]

@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import { loadChallenges } from "../lib/loaders.js";
+
+const challenges = loadChallenges();
+const openChallenges = challenges.filter(c => c.status === "open");
+const resolvedChallenges = challenges.filter(c => c.status === "resolved");
+---
+<Base title="Arena | Roads to AGI">
+  <div class="container">
+    <h1 style="margin-bottom: 0.5rem;">Arena</h1>
+    <p style="color: var(--muted); margin-bottom: 2rem;">
+      Adversarial survival. Claims face challenges. If they pass, they survive.
+    </p>
+
+    <div style="display: flex; gap: 2rem; margin-bottom: 3rem;">
+      <div class="card" style="flex: 1; text-align: center;">
+        <div style="font-size: 2rem; font-weight: 700;">{openChallenges.length}</div>
+        <div style="color: var(--muted);">Open</div>
+      </div>
+      <div class="card" style="flex: 1; text-align: center;">
+        <div style="font-size: 2rem; font-weight: 700;">{resolvedChallenges.length}</div>
+        <div style="color: var(--muted);">Resolved</div>
+      </div>
+    </div>
+
+    <h2 style="margin-bottom: 1rem;">Open Challenges</h2>
+    {openChallenges.length === 0 && <p style="color: var(--muted);">No open challenges.</p>}
+    {openChallenges.map(ch => (
+      <div class="card" style="margin-bottom: 1rem;">
+        <code>{ch.id}</code> → <code>{ch.target}</code>
+        <span class="tag contested" style="margin-left: 1rem;">{ch.type}</span>
+      </div>
+    ))}
+
+    <div style="margin-top: 3rem; padding: 2rem; background: #141414; border-radius: 8px;">
+      <h3>File a Challenge</h3>
+      <p style="color: var(--muted); margin: 1rem 0;">
+        Email: arena@roadstoagi.org with target claim, type, evidence.
+      </p>
+    </div>
+  </div>
+</Base>

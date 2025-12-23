@@ -1,0 +1,9 @@
+id: C-0003
+version: "1.0.0"
+text: "The evolution of reasoning proceeds from association to explanation to justification to falsification to adversarialism—Darwinian survival of claims through staged tests."
+dependencies: []
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0005]
+status: surviving
+changelog:
+  - "1.0.0: initial"
