@@ -1,0 +1,154 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Submit | Roads to AGI">
+  <main>
+    <h1>Submit to Roads to AGI</h1>
+    <p>Contribute raw material for the digestive pipeline.</p>
+
+    <form id="submit-form">
+      <div class="field">
+        <label for="kind">Type</label>
+        <select id="kind" name="kind" required>
+          <option value="link">Link / URL</option>
+          <option value="text">Text / Notes</option>
+          <option value="chat">Chat Export Link</option>
+          <option value="transcript">Transcript</option>
+          <option value="tweet">Tweet / Thread</option>
+          <option value="doc">Document</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="source_url">Source URL (if applicable)</label>
+        <input type="url" id="source_url" name="source_url" placeholder="https://..." />
+      </div>
+
+      <div class="field">
+        <label for="content">Content</label>
+        <textarea id="content" name="content" rows="10" required placeholder="Paste content, transcript, or notes here..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="tags">Tags (comma-separated)</label>
+        <input type="text" id="tags" name="tags" placeholder="runcible, bayesian, governance" />
+      </div>
+
+      <div class="field">
+        <label for="note">Note (optional context)</label>
+        <input type="text" id="note" name="note" placeholder="Why this is relevant..." />
+      </div>
+
+      <div class="field">
+        <label>
+          <input type="checkbox" id="team" name="team" /> I'm on the team
+        </label>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <div id="result" class="result"></div>
+  </main>
+
+  <style>
+    main {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    h1 { margin-bottom: 0.5rem; }
+    p { color: #666; margin-bottom: 2rem; }
+    .field {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+    input[type="text"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    textarea {
+      resize: vertical;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    .result {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 4px;
+    }
+    .result.success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .result.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+  </style>
+
+  <script>
+    const form = document.getElementById('submit-form') as HTMLFormElement;
+    const result = document.getElementById('result') as HTMLDivElement;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const tags = (formData.get('tags') as string || '').split(',').map(t => t.trim()).filter(Boolean);
+      
+      const payload = {
+        kind: formData.get('kind'),
+        content: formData.get('content'),
+        source_url: formData.get('source_url') || undefined,
+        tags: tags.length ? tags : undefined,
+        note: formData.get('note') || undefined,
+        submitter: formData.get('team') ? 'team' : 'public',
+      };
+
+      try {
+        const res = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+          result.className = 'result success';
+          result.innerHTML = `✓ Submitted! Artifact ID: <code>${data.artifact_id}</code>`;
+          form.reset();
+        } else {
+          result.className = 'result error';
+          result.textContent = `Error: ${data.error}`;
+        }
+      } catch (err) {
+        result.className = 'result error';
+        result.textContent = 'Failed to submit. Please try again.';
+      }
+    });
+  </script>
+</Base>
