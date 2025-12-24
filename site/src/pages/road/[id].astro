@@ -35,7 +35,11 @@ const enrichedClaims = claims.map(claim => ({
   })
 }));
 ---
-<Base title={`${road.title} | Roads to AGI`}>
+<Base 
+  title={road.title}
+  description={`${road.thesis.slice(0, 150)}${road.thesis.length > 150 ? '...' : ''}`}
+  type="article"
+>
   <div class="container-wide">
     <nav class="breadcrumb">
       <a href="/roads" class="muted">← All Roads</a>

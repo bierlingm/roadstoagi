@@ -1,0 +1,73 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#111214"/>
+    </linearGradient>
+    <linearGradient id="accent-grad" x1="0" y1="0" x2="200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="20" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-grad)"/>
+  
+  <!-- Subtle grid pattern -->
+  <g opacity="0.05">
+    <line x1="0" y1="157" x2="1200" y2="157" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="315" x2="1200" y2="315" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="473" x2="1200" y2="473" stroke="#fff" stroke-width="1"/>
+    <line x1="300" y1="0" x2="300" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="900" y1="0" x2="900" y2="630" stroke="#fff" stroke-width="1"/>
+  </g>
+  
+  <!-- Accent glow -->
+  <circle cx="200" cy="315" r="300" fill="#3b82f6" opacity="0.08" filter="url(#glow)"/>
+  
+  <!-- Road lines converging -->
+  <g stroke="#3b82f6" stroke-width="2" opacity="0.3">
+    <path d="M 0 100 Q 400 250, 600 315" fill="none"/>
+    <path d="M 0 200 Q 350 280, 600 315" fill="none"/>
+    <path d="M 0 315 L 600 315" fill="none"/>
+    <path d="M 0 430 Q 350 350, 600 315" fill="none"/>
+    <path d="M 0 530 Q 400 380, 600 315" fill="none"/>
+  </g>
+  
+  <!-- Convergence point -->
+  <circle cx="600" cy="315" r="8" fill="#3b82f6"/>
+  <circle cx="600" cy="315" r="20" stroke="#3b82f6" stroke-width="2" fill="none" opacity="0.5"/>
+  
+  <!-- Text -->
+  <text x="650" y="290" font-family="Inter, system-ui, sans-serif" font-size="64" font-weight="700" fill="#e5e5e5">
+    Roads to AGI
+  </text>
+  <text x="650" y="350" font-family="Inter, system-ui, sans-serif" font-size="24" fill="#9aa4b2">
+    Many theories. Shared tests. Survival decides.
+  </text>
+  
+  <!-- Status indicators -->
+  <g transform="translate(650, 400)">
+    <rect x="0" y="0" width="12" height="12" rx="6" fill="#22c55e"/>
+    <text x="22" y="11" font-family="IBM Plex Mono, monospace" font-size="14" fill="#79ef9b">surviving</text>
+    
+    <rect x="120" y="0" width="12" height="12" rx="6" fill="#eab308"/>
+    <text x="142" y="11" font-family="IBM Plex Mono, monospace" font-size="14" fill="#fcd34d">disputed</text>
+    
+    <rect x="250" y="0" width="12" height="12" rx="6" fill="#ef4444"/>
+    <text x="272" y="11" font-family="IBM Plex Mono, monospace" font-size="14" fill="#fca5a5">failed</text>
+  </g>
+  
+  <!-- Domain -->
+  <text x="1100" y="590" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#7b8794" text-anchor="end">
+    roadstoagi.org
+  </text>
+  
+  <!-- Border -->
+  <rect x="1" y="1" width="1198" height="628" stroke="#1b1b1b" stroke-width="2" fill="none" rx="0"/>
+</svg>

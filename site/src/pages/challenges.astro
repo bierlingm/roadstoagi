@@ -6,7 +6,10 @@ const challenges = loadChallenges();
 const openChallenges = challenges.filter(c => c.status === "open");
 const resolvedChallenges = challenges.filter(c => c.status === "resolved");
 ---
-<Base title="Challenges | Roads to AGI">
+<Base 
+  title="Challenges"
+  description="Think a claim is wrong? Challenge it with evidence. Active challenges and resolutions in the Roads to AGI arena."
+>
   <div class="container">
     <header class="page-header">
       <h1>Challenges</h1>

@@ -1,14 +1,82 @@
 ---
 import "../styles/tokens.css";
-const { title = "Roads to AGI", description = "Many roads. Shared tests. Survival, not consensus." } = Astro.props;
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
+  type?: "website" | "article";
+  publishedTime?: string;
+  noIndex?: boolean;
+}
+
+const SITE = {
+  name: "Roads to AGI",
+  url: "https://roadstoagi.org",
+  defaultDescription: "Many theories claim the path to AGI. We test them. Claims survive or fail under adversarial challenge. The best explanations emerge.",
+  defaultImage: "/og-default.png",
+  twitterHandle: "@raboratory",
+};
+
+const {
+  title,
+  description = SITE.defaultDescription,
+  image = SITE.defaultImage,
+  imageAlt = "Roads to AGI - Many theories. Shared tests. Survival decides.",
+  type = "website",
+  publishedTime,
+  noIndex = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} | ${SITE.name}` : SITE.name;
+const canonicalURL = new URL(Astro.url.pathname, SITE.url).href;
+const imageURL = image.startsWith("http") ? image : new URL(image, SITE.url).href;
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Primary Meta Tags -->
+  <title>{pageTitle}</title>
+  <meta name="title" content={pageTitle} />
   <meta name="description" content={description} />
-  <title>{title}</title>
+  {noIndex && <meta name="robots" content="noindex, nofollow" />}
+  <link rel="canonical" href={canonicalURL} />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content={type} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={imageURL} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={imageAlt} />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:locale" content="en_US" />
+  {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={canonicalURL} />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={imageURL} />
+  <meta name="twitter:image:alt" content={imageAlt} />
+  <meta name="twitter:site" content={SITE.twitterHandle} />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  
+  <!-- Theme -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="color-scheme" content="dark" />
+  
   <!-- Google Fonts: Inter, Source Serif 4, IBM Plex Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

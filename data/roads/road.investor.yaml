@@ -1,8 +1,0 @@
-id: road.investor
-version: "1.0.0"
-title: "The Investor Road"
-thesis: "Why this produces defensibility and deal flow: visible survival, public diligence, compounding credibility."
-includes_claims: [C-0001, C-0007, C-0008]
-includes_examples: []
-status: live
-maintainers: ["runcible"]
