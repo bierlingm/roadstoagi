@@ -129,7 +129,7 @@ import Base from '../layouts/Base.astro';
       };
 
       try {
-        const res = await fetch('https://r2agi-api.moritzbierling.workers.dev/submit', {
+        const res = await fetch('https://api.roadstoagi.org/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
