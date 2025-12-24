@@ -128,12 +128,27 @@ import Base from '../layouts/Base.astro';
         submitter: formData.get('team') ? 'team' : 'public',
       };
 
-      // API coming soon - for now, copy to clipboard for manual submission
-      const text = JSON.stringify(payload, null, 2);
-      await navigator.clipboard.writeText(text);
-      result.className = 'result success';
-      result.innerHTML = `✓ Copied to clipboard! Send to the team via Slack/Discord or email to <a href="mailto:submit@runcible.ai">submit@runcible.ai</a>`;
-      form.reset();
+      try {
+        const res = await fetch('https://r2agi-api.moritzbierling.workers.dev/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+          result.className = 'result success';
+          result.innerHTML = `✓ Submitted! Artifact ID: <code>${data.artifact_id}</code>`;
+          form.reset();
+        } else {
+          result.className = 'result error';
+          result.textContent = `Error: ${data.error}`;
+        }
+      } catch (err) {
+        result.className = 'result error';
+        result.textContent = 'Failed to submit. Please try again.';
+      }
     });
   </script>
 </Base>

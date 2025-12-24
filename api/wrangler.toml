@@ -1,0 +1,11 @@
+name = "r2agi-api"
+main = "src/index.js"
+compatibility_date = "2025-12-23"
+
+[[kv_namespaces]]
+binding = "ARTIFACTS"
+id = "8ba9c0b86c5e42d4a261b8061d40cf27"
+preview_id = "d77f88b03e8e458fa552ec82a1fbc083"
+
+[vars]
+ALLOWED_ORIGINS = "https://roadstoagi.org,http://localhost:4321"
