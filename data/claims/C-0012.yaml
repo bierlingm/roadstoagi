@@ -1,0 +1,9 @@
+id: C-0012
+version: "1.0.0"
+text: "Truth cannot be determined by consensus, authority, or persuasion. It can only be determined by survival under adversarial test—claims that withstand challenges from motivated opponents."
+dependencies: [C-0003]
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0014]
+status: surviving
+changelog:
+  - "1.0.0: initial - establishes adversarial truth-finding"

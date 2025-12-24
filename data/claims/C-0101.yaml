@@ -1,0 +1,9 @@
+id: C-0101
+version: "1.0.0"
+text: "Scaling laws predict continued capability gains. As compute and data increase, model performance improves predictably across benchmarks."
+dependencies: []
+evidence: ["paper:kaplan-2020-scaling", "paper:hoffmann-2022-chinchilla"]
+gates: [T-0101]
+status: surviving
+changelog:
+  - "1.0.0: initial - core scaling hypothesis"

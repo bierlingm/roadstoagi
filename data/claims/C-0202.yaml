@@ -1,0 +1,9 @@
+id: C-0202
+version: "1.0.0"
+text: "World models require structured representation. Implicit knowledge in weights is insufficient for planning, counterfactual reasoning, and causal inference."
+dependencies: [C-0201]
+evidence: ["paper:lecun-2022-path", "paper:bengio-2021-gflownet"]
+gates: [T-0202]
+status: surviving
+changelog:
+  - "1.0.0: initial - world model requirement"

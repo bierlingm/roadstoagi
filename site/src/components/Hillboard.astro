@@ -1,0 +1,115 @@
+---
+interface Road {
+  id: string;
+  title: string;
+  status: string;
+  claimsCount: number;
+  survivingCount: number;
+  survivalRate: number;
+}
+
+interface Props {
+  roads: Road[];
+  title?: string;
+}
+
+const { roads, title = "Hillboard" } = Astro.props;
+
+const sortedRoads = [...roads].sort((a, b) => b.survivalRate - a.survivalRate);
+
+function getSurvivalBadge(rate: number): string {
+  if (rate >= 70) return 'badge-pass';
+  if (rate >= 40) return 'badge-disputed';
+  return 'badge-fail';
+}
+---
+
+<section class="hillboard">
+  <h2>{title}</h2>
+  
+  <div class="hillboard-table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Road</th>
+          <th>Survival</th>
+          <th>Claims</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {sortedRoads.map((road, index) => (
+          <tr>
+            <td class="mono dim">{index + 1}</td>
+            <td>
+              <a href={`/road/${road.id}`} class="road-link">
+                <span class="road-title">{road.title}</span>
+                <span class="road-id mono dim">{road.id}</span>
+              </a>
+            </td>
+            <td>
+              <span class={`badge ${getSurvivalBadge(road.survivalRate)}`}>
+                {road.survivalRate}%
+              </span>
+            </td>
+            <td class="mono">
+              <span class="pass-text">{road.survivingCount}</span>
+              <span class="dim">/</span>
+              <span>{road.claimsCount}</span>
+            </td>
+            <td>
+              <span class="tag">{road.status}</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  
+  {roads.length === 0 && (
+    <p class="empty-state muted">No roads yet.</p>
+  )}
+</section>
+
+<style>
+  .hillboard {
+    margin: var(--space-8) 0;
+  }
+
+  .hillboard h2 {
+    margin-bottom: var(--space-6);
+  }
+
+  .hillboard-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .road-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .road-title {
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .road-link:hover .road-title {
+    color: var(--accent);
+  }
+
+  .road-id {
+    font-size: var(--fs-xs);
+  }
+
+  .pass-text {
+    color: var(--pass);
+  }
+
+  .empty-state {
+    padding: var(--space-8);
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,9 @@
+id: C-0014
+version: "1.0.0"
+text: "General reasoning emerges when machines can construct claims, predict consequences, survive tests, and be held accountable—the same standards we apply to testimony in law and science."
+dependencies: [C-0004, C-0007, C-0013]
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0016]
+status: surviving
+changelog:
+  - "1.0.0: initial - defines what general reasoning actually requires"

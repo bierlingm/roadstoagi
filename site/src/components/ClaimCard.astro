@@ -1,0 +1,93 @@
+---
+import GateChip from './GateChip.astro';
+
+interface Gate {
+  id: string;
+  kind?: string;
+  state?: 'pass' | 'disputed' | 'fail' | 'dormant';
+}
+
+interface Props {
+  id: string;
+  text: string;
+  status: 'surviving' | 'contested' | 'withdrawn' | 'dormant';
+  gates?: Gate[];
+  version?: string;
+  showActions?: boolean;
+}
+
+const { id, text, status, gates = [], version, showActions = true } = Astro.props;
+
+const statusToBadge: Record<string, string> = {
+  surviving: 'badge-pass',
+  contested: 'badge-disputed',
+  withdrawn: 'badge-fail',
+  dormant: 'badge-dormant',
+};
+
+const badgeClass = statusToBadge[status] || 'badge-dormant';
+---
+
+<article class="claim-card card">
+  <header class="claim-header">
+    <span class="claim-id mono">{id}</span>
+    {version && <span class="claim-version dim small">@{version}</span>}
+    <span class={`badge ${badgeClass}`}>{status}</span>
+  </header>
+
+  {gates.length > 0 && (
+    <ul class="gate-rail">
+      {gates.map(gate => (
+        <li>
+          <GateChip id={gate.id} kind={gate.kind} state={gate.state || 'dormant'} />
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <p class="claim-text">{text}</p>
+
+  {showActions && (
+    <footer class="claim-actions cluster">
+      <a href={`/claim/${id}`} class="btn">View</a>
+      <a href={`/arena?target=${id}`} class="btn">Critique</a>
+    </footer>
+  )}
+</article>
+
+<style>
+  .claim-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .claim-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .claim-id {
+    font-size: var(--fs-xs);
+    color: var(--fg-2);
+  }
+
+  .claim-version {
+    margin-left: -var(--space-2);
+  }
+
+  .claim-header .badge {
+    margin-left: auto;
+  }
+
+  .claim-text {
+    font-size: var(--fs-lg);
+    line-height: 1.5;
+    color: var(--fg);
+  }
+
+  .claim-actions {
+    margin-top: var(--space-2);
+  }
+</style>

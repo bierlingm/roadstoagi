@@ -1,0 +1,9 @@
+id: C-0102
+version: "1.0.0"
+text: "Emergent capabilities appear at scale that were absent in smaller models. Reasoning, planning, and tool use emerge without explicit training."
+dependencies: [C-0101]
+evidence: ["paper:wei-2022-emergent", "observation:gpt4-capabilities"]
+gates: [T-0102]
+status: disputed
+changelog:
+  - "1.0.0: initial - emergence claim"

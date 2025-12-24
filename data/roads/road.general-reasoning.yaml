@@ -1,0 +1,22 @@
+id: road.general-reasoning
+version: "1.0.0"
+title: "The General Reasoning Road"
+thesis: "AGI requires human-machine commensurability—shared reasoning structures that both can read, write, and verify. Scaling alone won't get us there; we need operational language, adversarial testing, and operator-auditor separation."
+includes_claims:
+  - C-0009  # Scaling alone insufficient
+  - C-0001  # LLMs as N-dimensional Bayesian accountants
+  - C-0010  # Commensurability requirement
+  - C-0002  # Operational language as shared structure
+  - C-0011  # Tower of Babel / translation problem
+  - C-0008  # High vs low dimensional closure
+  - C-0003  # Evolution of reasoning to adversarialism
+  - C-0012  # Truth through adversarial survival
+  - C-0005  # Constructive logic as falsification
+  - C-0004  # Survival hurdles
+  - C-0006  # Machine measurement to human checklists
+  - C-0007  # Commensurability standard enables decidability
+  - C-0013  # Operator-auditor separation
+  - C-0014  # General reasoning definition
+includes_examples: []
+status: live
+maintainers: ["runcible"]

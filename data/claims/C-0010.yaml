@@ -1,0 +1,9 @@
+id: C-0010
+version: "1.0.0"
+text: "General reasoning requires commensurability—the ability for humans and machines to understand each other's reasoning and verify each other's conclusions using shared structures."
+dependencies: [C-0009]
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0012]
+status: surviving
+changelog:
+  - "1.0.0: initial - defines commensurability requirement"

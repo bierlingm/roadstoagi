@@ -1,0 +1,104 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  thesis: string;
+  version?: string;
+  status?: 'live' | 'trial' | 'deprecated';
+  claimsCount?: number;
+  survivingCount?: number;
+  contestedCount?: number;
+}
+
+const { 
+  id, 
+  title, 
+  thesis, 
+  version = '1.0.0',
+  status = 'live',
+  claimsCount = 0,
+  survivingCount = 0,
+  contestedCount = 0
+} = Astro.props;
+
+const survivalRate = claimsCount > 0 ? Math.round((survivingCount / claimsCount) * 100) : 0;
+const survivalBadge = survivalRate >= 70 ? 'badge-pass' : (survivalRate >= 40 ? 'badge-disputed' : 'badge-fail');
+---
+
+<header class="road-header card">
+  <div class="road-header-top">
+    <div class="road-meta">
+      <span class="kicker mono">Road · {id}@{version}</span>
+      <h1>{title}</h1>
+    </div>
+    <div class="road-actions cluster">
+      <span class={`badge ${survivalBadge}`}>
+        Survival {survivalRate}%
+      </span>
+      <a href="/challenges" class="btn">Challenges</a>
+    </div>
+  </div>
+  
+  <hr class="rule" />
+  
+  <p class="road-thesis prose">{thesis}</p>
+  
+  <div class="road-stats cluster mono small">
+    <span>{claimsCount} claims</span>
+    <span class="dim">·</span>
+    <span class="pass-text">{survivingCount} surviving</span>
+    <span class="dim">·</span>
+    <span class="contested-text">{contestedCount} contested</span>
+  </div>
+</header>
+
+<style>
+  .road-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .road-header-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .road-meta h1 {
+    margin-top: var(--space-2);
+  }
+
+  .road-actions {
+    flex-shrink: 0;
+  }
+
+  .road-thesis {
+    color: var(--fg-1);
+    font-size: var(--fs-lg);
+    max-width: 72ch;
+  }
+
+  .road-stats {
+    margin-top: var(--space-4);
+  }
+
+  .pass-text {
+    color: var(--pass);
+  }
+
+  .contested-text {
+    color: var(--disputed);
+  }
+
+  @media (max-width: 768px) {
+    .road-header-top {
+      flex-direction: column;
+    }
+    
+    .road-actions {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+</style>

@@ -1,0 +1,9 @@
+id: C-0203
+version: "1.0.0"
+text: "Neuro-symbolic integration is tractable. Differentiable programming, neural theorem provers, and learned symbolic abstractions show viable paths to hybrid systems."
+dependencies: [C-0201, C-0202]
+evidence: ["paper:garcez-2019-neurosymbolic", "paper:mao-2019-neuro-symbolic"]
+gates: [T-0203]
+status: disputed
+changelog:
+  - "1.0.0: initial - integration tractability"

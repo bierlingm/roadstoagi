@@ -1,0 +1,9 @@
+id: C-0201
+version: "1.0.0"
+text: "Neural networks lack compositional generalization. They cannot reliably combine known concepts in novel ways, a core requirement for general reasoning."
+dependencies: []
+evidence: ["paper:lake-2018-compositionality", "paper:keysers-2020-cogs"]
+gates: [T-0201]
+status: surviving
+changelog:
+  - "1.0.0: initial - compositionality limitation"

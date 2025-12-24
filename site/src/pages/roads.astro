@@ -1,23 +1,60 @@
 ---
 import Base from "../layouts/Base.astro";
-import { loadRoads } from "../lib/loaders.js";
+import RoadCard from "../components/RoadCard.astro";
+import { loadRoads, loadClaims } from "../lib/loaders.js";
+
 const roads = loadRoads();
+const claims = loadClaims();
+
+const roadsWithStats = roads.map(road => {
+  const roadClaimIds = road.includes_claims || [];
+  const roadClaims = claims.filter(c => roadClaimIds.includes(c.id));
+  const surviving = roadClaims.filter(c => c.status === "surviving").length;
+  return {
+    ...road,
+    claimsCount: roadClaimIds.length,
+    survivingCount: surviving,
+    survivalRate: roadClaimIds.length > 0 ? Math.round((surviving / roadClaimIds.length) * 100) : 0
+  };
+});
 ---
 <Base title="Roads | Roads to AGI">
-  <div class="container">
-    <h1 style="margin-bottom: 0.5rem;">All Roads</h1>
-    <p style="color: var(--muted); margin-bottom: 2rem;">Independent paths to understanding general reasoning. Each road stands on its own.</p>
+  <div class="container-wide">
+    <header class="page-header">
+      <h1>All Roads</h1>
+      <p class="muted">Independent paths to understanding general reasoning. Each road stands on its own.</p>
+    </header>
+    
     <div class="grid">
-      {roads.map(road => (
-        <a href={`/road/${road.id}`} class="card" style="text-decoration: none; color: inherit;">
-          <h3>{road.title}</h3>
-          <p>{road.thesis}</p>
-          <div style="margin-top: 1rem;">
-            <span class="tag">{road.status}</span>
-            <span class="tag">v{road.version}</span>
-          </div>
-        </a>
+      {roadsWithStats.map(road => (
+        <RoadCard 
+          id={road.id}
+          title={road.title}
+          thesis={road.thesis}
+          status={road.status}
+          claimsCount={road.claimsCount}
+          survivingCount={road.survivingCount}
+        />
       ))}
     </div>
+    
+    {roads.length === 0 && (
+      <p class="muted empty-state">No roads yet. Coming soon.</p>
+    )}
   </div>
 </Base>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-8);
+  }
+  
+  .page-header h1 {
+    margin-bottom: var(--space-2);
+  }
+  
+  .empty-state {
+    padding: var(--space-12);
+    text-align: center;
+  }
+</style>

@@ -14,36 +14,189 @@ roads.forEach(r => {
   });
 });
 
-const highwayClaims = claims.filter(c => 
-  c.status === "surviving" && claimUsage[c.id] >= 2
-);
+// For now, show all surviving claims (lower threshold for early stage)
+const highwayClaims = claims.filter(c => c.status === "surviving");
+const multiRoadClaims = highwayClaims.filter(c => claimUsage[c.id] >= 2);
 ---
-<Base title="Highway | Roads to AGI">
+<Base title="The Highway | Roads to AGI">
   <div class="container">
-    <h1 style="margin-bottom: 0.5rem;">The Highway</h1>
-    <p style="color: var(--muted); margin-bottom: 2rem;">
-      Emergent canon. Claims that survive across multiple roads without critical challenges.
-    </p>
-    
-    <div class="card" style="margin-bottom: 2rem; text-align: center;">
-      <div style="font-size: 2rem; font-weight: 700;">{highwayClaims.length}</div>
-      <div style="color: var(--muted);">Claims on the Highway</div>
-      <p style="font-size: 0.8rem; color: var(--muted); margin-top: 1rem;">
-        Rule: surviving + used by ≥2 roads
+    <header class="page-header">
+      <h1>The Highway</h1>
+      <p class="lead">
+        The emerging consensus. Claims that survive challenges across multiple theories become the Highway — not by vote, but by survival.
       </p>
-    </div>
+    </header>
 
-    {highwayClaims.length === 0 && (
-      <p style="color: var(--muted);">No claims have reached the highway yet.</p>
-    )}
-    
-    {highwayClaims.map(claim => (
-      <div class="card" style="margin-bottom: 1rem;">
-        <code style="color: var(--muted);">{claim.id}</code>
-        <span class="tag surviving" style="margin-left: 1rem;">surviving</span>
-        <span class="tag" style="margin-left: 0.5rem;">{claimUsage[claim.id]} roads</span>
-        <p style="margin-top: 1rem;">{claim.text}</p>
+    <section class="progress-section">
+      <div class="progress-card card">
+        <div class="progress-stat">
+          <span class="stat-value">{highwayClaims.length}</span>
+          <span class="stat-label">Claims Surviving</span>
+        </div>
+        <div class="progress-stat">
+          <span class="stat-value">{multiRoadClaims.length}</span>
+          <span class="stat-label">Across 2+ Roads</span>
+        </div>
+        <div class="progress-stat">
+          <span class="stat-value">{roads.length}</span>
+          <span class="stat-label">Roads Testing</span>
+        </div>
       </div>
-    ))}
+    </section>
+
+    <section class="section">
+      <h2>What's Surviving</h2>
+      <p class="muted section-intro">
+        These claims have withstood scrutiny. As more roads test them and more challenges are resolved, the strongest will form the core of the Highway.
+      </p>
+      
+      {highwayClaims.length === 0 ? (
+        <div class="empty-state card">
+          <p>No claims have reached surviving status yet.</p>
+          <p class="muted">Explore the roads and help test the claims.</p>
+          <a href="/roads" class="btn">Explore Roads</a>
+        </div>
+      ) : (
+        <div class="claims-list stack-sm">
+          {highwayClaims.map(claim => (
+            <article class="highway-claim card">
+              <header class="claim-header">
+                <span class="claim-id mono">{claim.id}</span>
+                <div class="claim-badges">
+                  <span class="badge badge-pass">surviving</span>
+                  <span class="badge">{claimUsage[claim.id]} {claimUsage[claim.id] === 1 ? 'road' : 'roads'}</span>
+                </div>
+              </header>
+              <p class="claim-text">{claim.text}</p>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+
+    <section class="section cta-section">
+      <h2>Help Build the Highway</h2>
+      <p class="muted">
+        The Highway isn't decided by anyone — it emerges from what survives. You can help by challenging claims you think are wrong, or by submitting your own theory to test.
+      </p>
+      <div class="cta-buttons">
+        <a href="/challenges" class="btn">Challenge a Claim</a>
+        <a href="/submit" class="btn">Submit Your Road</a>
+      </div>
+    </section>
   </div>
 </Base>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .page-header h1 {
+    margin-bottom: var(--space-4);
+  }
+
+  .lead {
+    font-size: var(--fs-lg);
+    color: var(--fg-1);
+    max-width: 65ch;
+  }
+
+  .progress-section {
+    margin-bottom: var(--space-8);
+  }
+
+  .progress-card {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: var(--space-8);
+  }
+
+  .progress-stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .stat-value {
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    color: var(--pass);
+  }
+
+  .stat-label {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+
+  .section {
+    margin: var(--space-10) 0;
+  }
+
+  .section h2 {
+    margin-bottom: var(--space-3);
+  }
+
+  .section-intro {
+    margin-bottom: var(--space-6);
+  }
+
+  .highway-claim {
+    padding: var(--space-5);
+  }
+
+  .claim-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+
+  .claim-id {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+  }
+
+  .claim-badges {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .claim-text {
+    font-size: var(--fs-md);
+    line-height: 1.6;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: var(--space-10);
+  }
+
+  .empty-state p {
+    margin-bottom: var(--space-4);
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: var(--space-8) 0;
+  }
+
+  .cta-section p {
+    max-width: 50ch;
+    margin: 0 auto var(--space-6);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+  }
+
+  @media (max-width: 600px) {
+    .progress-card {
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+  }
+</style>

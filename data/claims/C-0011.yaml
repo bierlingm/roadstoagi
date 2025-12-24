@@ -1,0 +1,9 @@
+id: C-0011
+version: "1.0.0"
+text: "The Tower of Babel problem in AI is not about different languages but about different reasoning grammars. Translation between natural language and operational language enables mutual understanding."
+dependencies: [C-0002]
+evidence: ["transcript:curt-2024-12-23"]
+gates: [T-0013]
+status: surviving
+changelog:
+  - "1.0.0: initial - connects operational language to the translation problem"

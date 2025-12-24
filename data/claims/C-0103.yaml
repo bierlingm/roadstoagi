@@ -1,0 +1,9 @@
+id: C-0103
+version: "1.0.0"
+text: "RLHF and constitutional methods align model behavior sufficiently. Scaling alignment techniques alongside capabilities produces safe, useful systems."
+dependencies: [C-0101]
+evidence: ["paper:ouyang-2022-instructgpt", "paper:bai-2022-constitutional"]
+gates: [T-0103]
+status: disputed
+changelog:
+  - "1.0.0: initial - alignment via scale"

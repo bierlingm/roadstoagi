@@ -1,0 +1,91 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="About | Roads to AGI">
+  <div class="container">
+    <header class="page-header">
+      <h1>About</h1>
+    </header>
+
+    <section class="section prose">
+      <h2>What is this?</h2>
+      <p>
+        Roads to AGI is a public arena where theories about artificial general intelligence compete under test. Instead of endless debate, we break theories into specific claims that can be challenged with evidence.
+      </p>
+      <p>
+        What survives is what's true. What fails gets documented. Over time, the claims that hold up across multiple theories form the Highway — an emerging consensus built through adversarial testing, not popularity or authority.
+      </p>
+    </section>
+
+    <hr class="rule" />
+
+    <section class="section prose">
+      <h2>How it works</h2>
+      <ol class="how-list">
+        <li>
+          <strong>Roads</strong> — A road is a theory of how we get to AGI, broken into specific, testable claims.
+        </li>
+        <li>
+          <strong>Claims</strong> — Each claim is a concrete assertion that can be challenged with evidence.
+        </li>
+        <li>
+          <strong>Challenges</strong> — Anyone can challenge a claim. Challenges require evidence, not just disagreement.
+        </li>
+        <li>
+          <strong>Survival</strong> — Claims that withstand challenges survive. Claims that fail get marked as such.
+        </li>
+        <li>
+          <strong>The Highway</strong> — Claims that survive across multiple roads become the emerging consensus.
+        </li>
+      </ol>
+    </section>
+
+    <hr class="rule" />
+
+    <section class="section prose">
+      <h2>Who built this?</h2>
+      <p>
+        This arena is built by <a href="https://runcible.com">Runcible</a>, a company working on general reasoning. We've put our own theories here too — if we're wrong about something, we want to know.
+      </p>
+      <p>
+        The goal isn't to prove we're right. It's to find out what's actually true about how we get to AGI.
+      </p>
+    </section>
+
+    <hr class="rule" />
+
+    <section class="section prose">
+      <h2>Get involved</h2>
+      <p>
+        Have a theory? <a href="/submit">Submit a road</a>. Think a claim is wrong? <a href="/challenges">Challenge it</a>. Want to discuss? Reach out at <a href="mailto:hello@roadstoagi.org">hello@roadstoagi.org</a>.
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .section {
+    margin: var(--space-8) 0;
+  }
+
+  .section h2 {
+    margin-bottom: var(--space-4);
+  }
+
+  .how-list {
+    padding-left: var(--space-6);
+  }
+
+  .how-list li {
+    margin-bottom: var(--space-4);
+    line-height: 1.6;
+  }
+
+  .how-list li strong {
+    color: var(--fg);
+  }
+</style>

@@ -1,55 +1,222 @@
 ---
 import Base from "../layouts/Base.astro";
+import RoadCard from "../components/RoadCard.astro";
 import { loadRoads, loadClaims } from "../lib/loaders.js";
 
 const roads = loadRoads();
 const claims = loadClaims();
-const survivingCount = claims.filter(c => c.status === "surviving").length;
+
+// Compute stats for each road
+const roadsWithStats = roads.map(road => {
+  const roadClaimIds = road.includes_claims || [];
+  const roadClaims = claims.filter(c => roadClaimIds.includes(c.id));
+  const surviving = roadClaims.filter(c => c.status === "surviving").length;
+  return {
+    ...road,
+    claimsCount: roadClaimIds.length,
+    survivingCount: surviving,
+    survivalRate: roadClaimIds.length > 0 ? Math.round((surviving / roadClaimIds.length) * 100) : 0
+  };
+});
+
+// Highway claims = surviving across multiple roads
+const claimUsage = {};
+claims.forEach(c => { claimUsage[c.id] = 0; });
+roads.forEach(r => {
+  (r.includes_claims || []).forEach(cid => {
+    if (claimUsage[cid] !== undefined) claimUsage[cid]++;
+  });
+});
+const highwayClaims = claims.filter(c => 
+  c.status === "surviving" && claimUsage[c.id] >= 1
+).slice(0, 5);
 ---
 <Base title="Roads to AGI">
-  <div class="hero">
-    <h1>Roads to AGI</h1>
-    <p>Many roads. Shared tests. Survival, not consensus.</p>
-    <p style="margin-top: 1rem; font-size: 0.9rem;">
-      Competing explanations of general reasoning, gated and auditable.
-    </p>
-    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
-      <a href="/roads" class="btn">Explore Roads</a>
-      <a href="/arena" class="btn" style="background: transparent; border: 1px solid var(--accent);">View Arena</a>
+  <!-- HERO -->
+  <section class="hero">
+    <h1>How do we get to AGI?</h1>
+    <p class="hero-sub">Everyone has a theory. We test them.</p>
+    <div class="actions">
+      <a href="/roads" class="btn btn-primary">Explore the Roads</a>
+      <a href="/highway" class="btn">See What's Surviving</a>
     </div>
-  </div>
+  </section>
 
   <div class="container">
-    <div style="display: flex; gap: 2rem; justify-content: center; margin-bottom: 3rem; text-align: center;">
-      <div>
-        <div style="font-size: 2rem; font-weight: 700;">{roads.length}</div>
-        <div style="color: var(--muted);">Roads</div>
-      </div>
-      <div>
-        <div style="font-size: 2rem; font-weight: 700;">{claims.length}</div>
-        <div style="color: var(--muted);">Claims</div>
-      </div>
-      <div>
-        <div style="font-size: 2rem; font-weight: 700;">{survivingCount}</div>
-        <div style="color: var(--muted);">Surviving</div>
-      </div>
-    </div>
+    <!-- THE PROBLEM -->
+    <section class="section">
+      <h2>The Problem</h2>
+      <p class="prose">
+        Most AGI discourse is untestable speculation. Papers, blog posts, Twitter threads — claims you can argue about forever but never verify. "Scaling is all you need." "We need symbolic reasoning." "It's just around the corner." How do you know who's right?
+      </p>
+    </section>
 
-    <h2 style="margin-bottom: 1rem;">Pick Your Road</h2>
-    <div class="grid">
-      {roads.map(road => (
-        <a href={`/road/${road.id}`} class="card" style="text-decoration: none; color: inherit;">
-          <h3>{road.title}</h3>
-          <p>{road.thesis}</p>
-          <div style="margin-top: 1rem;">
-            <span class="tag">{road.status}</span>
-            <span class="tag">{road.includes_claims?.length || 0} claims</span>
-          </div>
-        </a>
-      ))}
-      {roads.length === 0 && (
-        <p style="color: var(--muted);">No roads yet. Coming soon.</p>
+    <hr class="rule" />
+
+    <!-- THE SOLUTION -->
+    <section class="section">
+      <h2>The Solution</h2>
+      <p class="prose">
+        Here, theories break into <strong>claims</strong>. Claims face <strong>challenges</strong>. What survives is what's true.
+      </p>
+      <p class="prose" style="margin-top: var(--space-4);">
+        No popularity contests. No appeals to authority. Just evidence and survival.
+      </p>
+    </section>
+
+    <hr class="rule" />
+
+    <!-- THE HIGHWAY -->
+    <section class="section">
+      <div class="section-header">
+        <h2>What's Surviving</h2>
+        <a href="/highway" class="link-arrow">View all →</a>
+      </div>
+      <p class="muted" style="margin-bottom: var(--space-6);">
+        Claims that hold up across multiple theories become the emerging consensus — the Highway.
+      </p>
+      
+      {highwayClaims.length > 0 ? (
+        <div class="highway-claims stack-sm">
+          {highwayClaims.map(claim => (
+            <div class="highway-claim card">
+              <span class="claim-id mono">{claim.id}</span>
+              <p>{claim.text}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p class="muted">The highway is being built. Explore the roads and help test the claims.</p>
       )}
-    </div>
+    </section>
+
+    <hr class="rule" />
+
+    <!-- EXPLORE ROADS -->
+    <section class="section">
+      <div class="section-header">
+        <h2>Explore the Roads</h2>
+        <a href="/roads" class="link-arrow">View all →</a>
+      </div>
+      <p class="muted" style="margin-bottom: var(--space-6);">
+        Each road is a theory of how we get to AGI, broken into testable claims.
+      </p>
+      <div class="grid">
+        {roadsWithStats.map(road => (
+          <RoadCard 
+            id={road.id}
+            title={road.title}
+            thesis={road.thesis}
+            status={road.status}
+            claimsCount={road.claimsCount}
+            survivingCount={road.survivingCount}
+          />
+        ))}
+      </div>
+      {roads.length === 0 && (
+        <p class="muted">No roads yet. Coming soon.</p>
+      )}
+    </section>
+
+    <hr class="rule" />
+
+    <!-- PARTICIPATE -->
+    <section class="section participate">
+      <h2>Participate</h2>
+      <div class="participate-grid">
+        <div class="participate-card card">
+          <h3>Challenge a Claim</h3>
+          <p class="muted">Think something's wrong? Make your case with evidence.</p>
+          <a href="/challenges" class="btn">View Challenges</a>
+        </div>
+        <div class="participate-card card">
+          <h3>Submit Your Road</h3>
+          <p class="muted">Have a theory? Break it into claims and enter the arena.</p>
+          <a href="/submit" class="btn">Submit</a>
+        </div>
+        <div class="participate-card card">
+          <h3>Build the Highway</h3>
+          <p class="muted">Help test claims. What survives becomes the emerging consensus.</p>
+          <a href="/highway" class="btn">See Progress</a>
+        </div>
+      </div>
+    </section>
   </div>
 </Base>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: var(--space-12) var(--space-6);
+  }
+  
+  .hero h1 {
+    font-size: var(--fs-3xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .hero-sub {
+    font-size: var(--fs-xl);
+    color: var(--fg-1);
+    margin-bottom: var(--space-8);
+  }
+  
+  .section {
+    margin: var(--space-10) 0;
+  }
+  
+  .section h2 {
+    margin-bottom: var(--space-4);
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-2);
+  }
+  
+  .link-arrow {
+    font-size: var(--fs-sm);
+  }
+  
+  .highway-claim {
+    padding: var(--space-4);
+  }
+  
+  .highway-claim .claim-id {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+  
+  .highway-claim p {
+    font-size: var(--fs-md);
+    line-height: 1.5;
+  }
+  
+  .participate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-6);
+  }
+  
+  .participate-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
+  .participate-card h3 {
+    font-size: var(--fs-lg);
+  }
+  
+  .participate-card p {
+    flex-grow: 1;
+  }
+  
+  .participate-card .btn {
+    align-self: flex-start;
+  }
+</style>

@@ -1,0 +1,9 @@
+id: C-0013
+version: "1.0.0"
+text: "Operator-auditor separation prevents AI systems from both making claims and judging their truth. The machine that generates claims cannot be the machine that evaluates them."
+dependencies: [C-0006, C-0012]
+evidence: ["design:runcible-architecture"]
+gates: [T-0015]
+status: surviving
+changelog:
+  - "1.0.0: initial - critical architectural requirement for trustworthy AGI"

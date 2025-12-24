@@ -1,0 +1,11 @@
+id: road.hybrid
+version: "1.0.0"
+title: "The Hybrid Systems Road"
+thesis: "AGI requires combining neural networks with symbolic reasoning—explicit knowledge representation, formal logic, and structured world models that neural nets alone cannot provide."
+includes_claims:
+  - C-0201
+  - C-0202
+  - C-0203
+includes_examples: []
+status: live
+maintainers: ["community"]

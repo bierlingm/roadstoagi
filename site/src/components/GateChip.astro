@@ -1,0 +1,14 @@
+---
+interface Props {
+  id: string;
+  kind?: string;
+  state?: 'pass' | 'disputed' | 'fail' | 'dormant';
+}
+
+const { id, kind, state = 'dormant' } = Astro.props;
+const stateClass = `gate-chip-${state}`;
+---
+
+<span class={`gate-chip ${stateClass}`} title={kind ? `${kind}: ${id}` : id}>
+  {id}
+</span>

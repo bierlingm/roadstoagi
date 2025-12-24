@@ -1,0 +1,9 @@
+id: C-0009
+version: "1.0.0"
+text: "AGI cannot be achieved through scaling alone. Current frontier models demonstrate impressive pattern-matching but cannot reliably reason in ways humans can verify, audit, or trust."
+dependencies: []
+evidence: ["observation:hallucination-persistence", "observation:reasoning-opacity"]
+gates: [T-0011]
+status: surviving
+changelog:
+  - "1.0.0: initial - establishes the scaling-alone limitation"

@@ -1,0 +1,79 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  thesis: string;
+  status: string;
+  claimsCount: number;
+  survivingCount: number;
+}
+
+const { id, title, thesis, status, claimsCount, survivingCount } = Astro.props;
+
+const survivalRate = claimsCount > 0 ? Math.round((survivingCount / claimsCount) * 100) : 0;
+const survivalBadge = survivalRate >= 70 ? 'badge-pass' : (survivalRate >= 40 ? 'badge-disputed' : 'badge-fail');
+---
+
+<a href={`/road/${id}`} class="road-card card">
+  <header class="road-card-header">
+    <span class="mono small dim">{id}</span>
+    <span class={`badge ${survivalBadge}`}>{survivalRate}%</span>
+  </header>
+  
+  <h3>{title}</h3>
+  <p class="thesis">{thesis}</p>
+  
+  <footer class="road-card-footer">
+    <span class="tag">{status}</span>
+    <span class="mono small">
+      <span class="pass-text">{survivingCount}</span>/{claimsCount} claims
+    </span>
+  </footer>
+</a>
+
+<style>
+  .road-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .road-card:hover {
+    border-color: var(--accent);
+    text-decoration: none;
+  }
+
+  .road-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .road-card h3 {
+    font-size: var(--fs-lg);
+    margin: 0;
+  }
+
+  .thesis {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+    flex-grow: 1;
+  }
+
+  .road-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border);
+  }
+
+  .pass-text {
+    color: var(--pass);
+  }
+</style>

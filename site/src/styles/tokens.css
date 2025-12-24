@@ -1,0 +1,441 @@
+/* Roads to AGI - Design Tokens (Merged System) */
+
+/* Fonts - Google Fonts loaded in Base.astro */
+:root {
+  --font-ui: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-prose: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Colors - Dark theme with domain-specific semantics */
+:root {
+  /* Backgrounds */
+  --bg: #0a0a0a;
+  --bg-1: #111214;
+  --bg-2: #17191c;
+  --surface: #111214;
+  
+  /* Foregrounds */
+  --fg: #e5e5e5;
+  --fg-1: #c9d1d9;
+  --fg-2: #9aa4b2;
+  --muted: #7b8794;
+  
+  /* Accent */
+  --accent: #3b82f6;
+  --accent-weak: #1e3a8a;
+  
+  /* Semantic states - domain-specific naming */
+  --pass: #22c55e;
+  --disputed: #eab308;
+  --fail: #ef4444;
+  --dormant: #9ca3af;
+  
+  /* Borders & structure */
+  --border: #1b1b1b;
+  --ring: #2a2a2a;
+  --line: #242b33;
+  
+  /* Effects */
+  --shadow: 0 2px 8px rgba(0,0,0,.4);
+  --shadow-lg: 0 6px 24px rgba(0,0,0,.35);
+  --focus: 0 0 0 3px rgba(59,130,246,.4);
+  
+  /* Radii */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+  
+  /* Spacing (4px baseline) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  
+  /* Typography scale (modular 1.125) */
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 22px;
+  --fs-2xl: 28px;
+  --fs-3xl: 36px;
+  
+  /* Layout */
+  --container: 72ch;
+  --container-wide: 1200px;
+}
+
+/* Base reset and styles */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: var(--fs-md);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Links */
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Focus states */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+/* Layout utilities */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.container-wide {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* Stack (vertical rhythm) */
+.stack > * + * { margin-top: var(--space-6); }
+.stack-sm > * + * { margin-top: var(--space-3); }
+.stack-lg > * + * { margin-top: var(--space-8); }
+
+/* Cluster (horizontal grouping) */
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.cluster-sm { gap: var(--space-2); }
+
+/* Card */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+  box-shadow: var(--shadow);
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: var(--fs-3xl); }
+h2 { font-size: var(--fs-2xl); }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); }
+
+.prose {
+  font-family: var(--font-prose);
+  line-height: 1.7;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.kicker {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dim { color: var(--fg-2); }
+.muted { color: var(--muted); }
+.small { font-size: var(--fs-sm); }
+
+/* Dividers */
+.rule {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: var(--space-6) 0;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  border: 1px solid var(--ring);
+  background: var(--bg-2);
+  color: var(--fg);
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+.btn:focus-visible {
+  box-shadow: var(--focus);
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, rgba(59,130,246,.18), rgba(59,130,246,.10));
+  border-color: rgba(59,130,246,.45);
+}
+
+.btn-primary:hover {
+  border-color: var(--accent);
+}
+
+/* Status badges with color-mix backgrounds */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--ring);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+.badge-pass {
+  background: color-mix(in oklab, var(--pass) 18%, transparent);
+  border-color: color-mix(in oklab, var(--pass) 50%, var(--ring));
+  color: #79ef9b;
+}
+
+.badge-disputed {
+  background: color-mix(in oklab, var(--disputed) 18%, transparent);
+  border-color: color-mix(in oklab, var(--disputed) 50%, var(--ring));
+  color: #fcd34d;
+}
+
+.badge-fail {
+  background: color-mix(in oklab, var(--fail) 18%, transparent);
+  border-color: color-mix(in oklab, var(--fail) 50%, var(--ring));
+  color: #fca5a5;
+}
+
+.badge-dormant {
+  background: color-mix(in oklab, var(--dormant) 18%, transparent);
+  border-color: color-mix(in oklab, var(--dormant) 50%, var(--ring));
+  color: var(--dormant);
+}
+
+/* Gate chips (pill-style for rail) */
+.gate-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--ring);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.gate-chip-pass {
+  background: color-mix(in oklab, var(--pass) 18%, transparent);
+  border-color: color-mix(in oklab, var(--pass) 50%, var(--ring));
+  color: #79ef9b;
+}
+
+.gate-chip-disputed {
+  background: color-mix(in oklab, var(--disputed) 18%, transparent);
+  border-color: color-mix(in oklab, var(--disputed) 50%, var(--ring));
+  color: #fcd34d;
+}
+
+.gate-chip-fail {
+  background: color-mix(in oklab, var(--fail) 18%, transparent);
+  border-color: color-mix(in oklab, var(--fail) 50%, var(--ring));
+  color: #fca5a5;
+}
+
+.gate-chip-dormant {
+  opacity: 0.6;
+}
+
+/* Gate rail (horizontal list of chips) */
+.gate-rail {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+
+/* Stats row */
+.stats {
+  display: flex;
+  gap: var(--space-8);
+  justify-content: center;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+}
+
+.stat-label {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+/* Navigation */
+nav {
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-4) var(--space-6);
+}
+
+nav .nav-inner {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+nav .logo {
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--fg);
+}
+
+nav .links {
+  display: flex;
+  gap: var(--space-6);
+}
+
+nav .links a {
+  color: var(--fg-2);
+  font-size: var(--fs-sm);
+}
+
+nav .links a:hover {
+  color: var(--fg);
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+}
+
+/* Hero section */
+.hero {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+}
+
+.hero h1 {
+  margin-bottom: var(--space-4);
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: var(--fs-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hero .actions {
+  margin-top: var(--space-8);
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+/* Tag (simple label) */
+.tag {
+  display: inline-block;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  color: var(--fg-2);
+}
+
+/* Table */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th,
+.table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  font-weight: 600;
+  color: var(--fg-2);
+  font-size: var(--fs-sm);
+}
+
+.table tr:hover td {
+  background: var(--bg-1);
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

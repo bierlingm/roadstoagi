@@ -1,0 +1,9 @@
+id: C-0104
+version: "1.0.0"
+text: "AGI will emerge from continued scaling of current architectures. No fundamental breakthrough is required—only engineering and resources."
+dependencies: [C-0101, C-0102, C-0103]
+evidence: ["projection:openai-roadmap", "projection:anthropic-rsp"]
+gates: [T-0104]
+status: disputed
+changelog:
+  - "1.0.0: initial - strong scaling thesis"

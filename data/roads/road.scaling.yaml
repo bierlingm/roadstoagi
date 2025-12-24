@@ -1,0 +1,12 @@
+id: road.scaling
+version: "1.0.0"
+title: "The Scaling Road"
+thesis: "AGI emerges from scale—sufficient compute, data, and architectural refinements will produce general intelligence. The path is more of the same, done better."
+includes_claims:
+  - C-0101
+  - C-0102
+  - C-0103
+  - C-0104
+includes_examples: []
+status: live
+maintainers: ["community"]
