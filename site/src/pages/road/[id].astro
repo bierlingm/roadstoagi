@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import SharePack from "../../components/SharePack.astro";
 import { loadRoads, loadClaims, loadGates, getClaimById, getGateById } from "../../lib/loaders.js";
 
 export function getStaticPaths() {
@@ -62,5 +63,12 @@ const claims = (road.includes_claims || []).map(cid => getClaimById(allClaims, c
       <a href="/arena" class="btn" style="background: transparent; border: 1px solid var(--accent);">File a Challenge</a>
       <a href="/investors" class="btn">Request Investor Brief</a>
     </div>
+
+    <SharePack 
+      title={road.title}
+      description={road.thesis}
+      url={`https://roadstoagi.org/road/${road.id}`}
+      claims={claims.slice(0, 3).map(c => c.text.slice(0, 100) + (c.text.length > 100 ? '...' : ''))}
+    />
   </div>
 </Base>

@@ -1,0 +1,139 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  claims?: string[];
+}
+
+const { title, description, url, claims = [] } = Astro.props;
+
+// Generate share content for different platforms
+const tweetThread = [
+  `🛤️ ${title}`,
+  '',
+  description,
+  '',
+  claims.length > 0 ? `Key claims:\n${claims.map(c => `• ${c}`).join('\n')}` : '',
+  '',
+  `Full road: ${url}`,
+  '',
+  '#RoadsToAGI #GeneralReasoning'
+].filter(Boolean).join('\n');
+
+const dmPack = `${title}\n\n${description}\n\nRead more: ${url}`;
+
+const emailBlock = `Subject: ${title} - Roads to AGI
+
+${description}
+
+${claims.length > 0 ? `Key claims:\n${claims.map(c => `• ${c}`).join('\n')}\n\n` : ''}Read the full road: ${url}
+
+---
+Roads to AGI: Many roads. Shared tests. Survival, not consensus.
+https://roadstoagi.org`;
+---
+
+<div class="share-pack">
+  <h4>Share this road</h4>
+  
+  <div class="share-buttons">
+    <button class="share-btn" data-content={tweetThread} data-type="thread">
+      𝕏 Thread
+    </button>
+    <button class="share-btn" data-content={dmPack} data-type="dm">
+      📱 DM
+    </button>
+    <button class="share-btn" data-content={emailBlock} data-type="email">
+      ✉️ Email
+    </button>
+    <button class="share-btn" data-content={url} data-type="link">
+      🔗 Link
+    </button>
+  </div>
+  
+  <div class="share-preview" id="share-preview"></div>
+</div>
+
+<style>
+  .share-pack {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--border, #262626);
+    border-radius: 8px;
+  }
+  
+  h4 {
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    color: var(--muted, #737373);
+  }
+  
+  .share-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .share-btn {
+    background: var(--bg, #0a0a0a);
+    border: 1px solid var(--border, #262626);
+    color: var(--fg, #e5e5e5);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+  
+  .share-btn:hover {
+    background: var(--accent, #3b82f6);
+    border-color: var(--accent, #3b82f6);
+  }
+  
+  .share-btn.active {
+    background: var(--accent, #3b82f6);
+    border-color: var(--accent, #3b82f6);
+  }
+  
+  .share-preview {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bg, #0a0a0a);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    white-space: pre-wrap;
+    display: none;
+  }
+  
+  .share-preview.visible {
+    display: block;
+  }
+  
+  .share-preview .copied {
+    color: #22c55e;
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll('.share-btn');
+  const preview = document.getElementById('share-preview');
+  
+  buttons.forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const content = btn.dataset.content;
+      const type = btn.dataset.type;
+      
+      // Copy to clipboard
+      await navigator.clipboard.writeText(content);
+      
+      // Show preview
+      preview.innerHTML = `<span class="copied">✓ Copied ${type}!</span>\n\n${content}`;
+      preview.classList.add('visible');
+      
+      // Highlight active button
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
